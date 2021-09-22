@@ -1,5 +1,6 @@
-import App from "./App";
+import React from 'react';
 import {render, unmountComponentAtNode} from 'react-dom';
+import App from "./App";
 // import('./bootstrap');
 
 class ReactElement extends HTMLElement {
@@ -9,25 +10,16 @@ class ReactElement extends HTMLElement {
 
   connectedCallback() {
     this._innerHTML = this.innerHTML;
-    this.mount();
-  }
-
-  disconnectedCallback() {
-    this.unmount();
-  }
-
-  update() {
-    this.unmount();
-    this.mount();
-  }
-
-  mount() {
     render(<App />, this);
   }
 
-  unmount() {
+  disconnectedCallback() {
     unmountComponentAtNode(this);
   }
 
+  update() {
+    unmountComponentAtNode(this);
+    render(<App />, this);
+  }
 }
 customElements.define('react-app', ReactElement);

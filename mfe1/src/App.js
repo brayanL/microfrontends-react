@@ -1,29 +1,35 @@
 import React from 'react';
-import {Grid, TextField} from "@mui/material";
-import {LocalizationProvider, StaticDatePicker} from "@mui/lab";
+import { Grid, TextField } from "@mui/material";
+import { LocalizationProvider, StaticDatePicker } from "@mui/lab";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
-import {isWeekend} from "date-fns";
+import { isWeekend } from "date-fns";
 
+class App extends React.Component {
 
-function App() {
-  const [value, setValue] = React.useState(new Date());
+  constructor() {
+    super();
+    this.state = { value: new Date() };
+  }
 
-  return (
-    <Grid container>
-      <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <StaticDatePicker
-          orientation="landscape"
-          openTo="day"
-          value={value}
-          shouldDisableDate={isWeekend}
-          onChange={(newValue) => {
-            setValue(newValue);
-          }}
-          renderInput={(params) => <TextField {...params} />}
-        />
-      </LocalizationProvider>
-    </Grid>
-  );
+  render() {
+    return (
+      <Grid container>
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <StaticDatePicker
+            orientation="landscape"
+            openTo="day"
+            value={this.state.value}
+            shouldDisableDate={isWeekend}
+            onChange={(newValue) => {
+              this.setState({ value: newValue })
+              console.log("newValue", newValue);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
+      </Grid>
+    );
+  }
 }
 
 export default App;
